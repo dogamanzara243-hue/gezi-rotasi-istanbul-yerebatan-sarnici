@@ -1,0 +1,8 @@
+body.theme-history { --theme-primary: #d97706; }
+body.theme-museum { --theme-primary: #6366f1; }
+body.theme-nature { --theme-primary: #059669; }
+body.theme-sea { --theme-primary: #0284c7; }
+* { box-sizing: border-box; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
