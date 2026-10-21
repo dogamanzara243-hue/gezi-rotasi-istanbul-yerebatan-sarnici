@@ -1,49 +1,57 @@
 const SPOT_DATA = {
-  theme: "history",
-  meta: {
-    title: "Yerebatan Sarnıcı | İstanbul Gezi Rehberi",
-    description: "Tarihi yarımadanın gizemli yeraltı sarayı, antik mermer sütunları ve Medusa başlarıyla büyüleyici Yerebatan Sarnıcı'nı keşfedin."
-  },
-  hero: {
-    badge: "Bizans'ın Gizemli Yeraltı Sarayı",
-    badgeIcon: "fa-solid fa-water",
-    title: "Yerebatan Sarnıcı",
-    subtitle: "İstanbul'un Kalbinde Yüzlerce Sütunlu Tarihi Su Hazinesi",
-    coverImage: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=1600&q=80&fm=webp",
-    stats: [
-      { value: "532", label: "İnşa Yılı (MS)", icon: "fa-solid fa-calendar-days" },
-      { value: "336", label: "Mermer Sütun", icon: "fa-solid fa-chess-rook" },
-      { value: "80.000m³", label: "Su Kapasitesi", icon: "fa-solid fa-droplet" },
-      { value: "UNESCO", label: "Dünya Mirası", icon: "fa-solid fa-award" }
+    theme: "history",
+    hero: {
+        coverImage: "https://images.unsplash.com/photo-1541432901042-2d8bd64b3a9b?auto=format&fit=crop&w=1600&q=80",
+        category: "Tarihi Yer & Kültür Mirası",
+        badge: "Gezi Rotası",
+        title: "Istanbul Yerebatan Sarnici",
+        subtitle: "İstanbul'un tarihi ve kültürel dokusunu yansıtan, keşfedilmeyi bekleyen eşsiz bir durak.",
+        stats: [{"label": "Konum", "value": "İstanbul"}, {"label": "Ziyaret", "value": "Her Gün"}]
+    },
+    summary: {
+        typeTitle: "Önemli Tarihi Mekan",
+        description: "Gezi Rotasi Istanbul Yerebatan Sarnici, İstanbul'un zengin tarihine tanıklık eden, mimari ve kültürel açıdan büyük öneme sahip gözde bir lokasyondur.",
+        badges: [
+            { icon: "fa-solid fa-clock", text: "Ziyaret Saatleri: 09:00 - 18:00" },
+            { icon: "fa-solid fa-ticket", text: "Müzekart Geçerlidir" }
+        ]
+    },
+    overview: {
+        paragraphs: [
+            "Gezi Rotasi Istanbul Yerebatan Sarnici, yerli ve yabancı ziyaretçilerin akın ettiği, geçmişin izlerini bugüne taşıyan muazzam bir mirastır.",
+            "Çevresindeki tarihi doku, eşsiz manzaralar ve merkezi konumuyla gezi rotalarınızda mutlaka yer alması gereken bir noktadır."
+        ],
+        visitorNotes: [
+            { title: "Önemli Not", description: "Ziyaret öncesi güncel saatleri kontrol etmeniz önerilir." },
+            { title: "Ziyaret İpucu", description: "Fotoğraf çekimi ve geziler için en az 1-2 saat ayırmanız tavsiye edilir." },
+            { title: "Genel Bilgi", description: "Toplu taşıma ile ulaşım oldukça kolay ve pratiktir." }
+        ]
+    },
+    whyVisit: [
+        { icon: "fa-solid fa-archway", title: "Mimari Şaheser", description: "Yüzyıllara meydan okuyan eşsiz yapı teknikleri ve süslemeler." },
+        { icon: "fa-solid fa-scroll", title: "Tarihi Derinlik", description: "İmparatorluklardan günümüze kalan paha biçilemez hatıralar." },
+        { icon: "fa-solid fa-camera", title: "Eşsiz Atmosfer", description: "Fotoğraf severler ve tarih meraklıları için büyüleyici kareler." }
+    ],
+    mustSee: [
+        { image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b3a9b?auto=format&fit=crop&w=1600&q=80", title: "Ana Yapı", description: "Müthiş işçilikle inşa edilmiş ana mimari unsurlar." },
+        { image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b3a9b?auto=format&fit=crop&w=1600&q=80", title: "Tarihi Avlular", description: "Geçmişin izlerini taşıyan görkemli alanlar." },
+        { image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b3a9b?auto=format&fit=crop&w=1600&q=80", title: "İç Mekan Detayları", description: "El işçiliği süslemeler ve tarihi eserler." },
+        { image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b3a9b?auto=format&fit=crop&w=1600&q=80", title: "Panoramik Görünüm", description: "Çevrenin ve yapının en güzel açılardan görünümü." }
+    ],
+    transportation: {
+        methods: [
+            { icon: "fa-solid fa-train-tram", title: "Toplu Taşıma", detail: "Raylı sistemler ve merkezi hatlar ile kolayca ulaşım sağlayabilirsiniz." },
+            { icon: "fa-solid fa-bus", title: "Otobüs & Minibüs", detail: "Merkezi noktalardan geçen hatları kullanabilirsiniz." }
+        ],
+        tip: "Bölge yoğun olabileceğinden toplu taşıma tercih etmeniz önerilir.",
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Istanbul+Yerebatan+Sarnici+Istanbul"
+    },
+    whereToStay: [
+        { name: "Four Seasons Hotel Istanbul", type: "Lüks Otel", rating: "4.9", link: "https://www.google.com/travel/hotels" },
+        { name: "Sura Hotel Istanbul", type: "Merkezi Konaklama", rating: "4.7", link: "https://www.google.com/travel/hotels" }
+    ],
+    whereToEat: [
+        { name: "Tarihi Restoran & Kafe", cuisine: "Geleneksel Lezzetler", rating: "4.6", link: "https://www.google.com/maps" },
+        { name: "Panorama Restoran", cuisine: "Manzaralı Akşam Yemeği", rating: "4.7", link: "https://www.google.com/maps" }
     ]
-  },
-  whatIsIt: {
-    title: "Bu Yapı / Alan Nedir?",
-    categoryBadge: "Bizans Su Sarnıcı & Müze",
-    description: "Yerebatan Sarnıcı; Bizans İmparatoru I. Justinianus tarafından 532 yılında inşa ettirilen, şehrin su ihtiyacını karşılamak için kurulan en büyük kapalı sarnıçtır."
-  },
-  detailedGuide: {
-    title: "Yerebatan Sarnıcı'nın Tarihi ve Efsaneleri",
-    paragraphs: [
-      "İstanbul'un tarihi yarımadasında, Ayasofya'nın güneybatısında yer alan Yerebatan Sarnıcı, dönemin büyük sarayının ve bölge halkının su ihtiyacını karşılamak üzere inşa edilmiş devasa bir mühendislik harikasıdır.",
-      "Sarnıç içerisindeki 336 sütun, her biri 9 metre yüksekliğinde 12 sıra halinde dizilmiştir."
-    ]
-  },
-  whyVisit: [
-    { title: "Mistik Yeraltı Atmosferi", description: "Loş ışıklandırma ve su sesleriyle büyüleyici dünya.", icon: "fa-solid fa-lightbulb" },
-    { title: "Gizemli Medusa Başları", description: "Ters ve yan duran Medusa heykellerini görün.", icon: "fa-solid fa-eye" },
-    { title: "Tarihi Mühendislik", description: "Bizans su depolama teknolojisini keşfedin.", icon: "fa-solid fa-landmark" }
-  ],
-  highlights: ["336 Mermer Sütun", "Medusa Başları", "Gözyaşı Sütunu", "Sanat Enstalasyonları"],
-  transportation: {
-    title: "Yerebatan Sarnıcı'na Nasıl Gidilir?",
-    description: "Sultanahmet Meydanı'nın hemen yakınında yer alır.",
-    tips: ["T1 tramvayı ile Sultanahmet durağında inebilirsiniz.", "Meydandan yürüyerek 2 dakikada ulaşabilirsiniz."]
-  },
-  hotels: [
-    { name: "Four Seasons Hotel Istanbul", badge: "Lüks", description: "Sultanahmet'te lüks otel.", url: "https://gezirotasi.com/fs", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80&fm=webp" }
-  ],
-  restaurants: [
-    { name: "Deraliye Ottoman Cuisine", badge: "Saray Mutfağı", description: "Osmanlı yemekleri.", location: "Sultanahmet, İstanbul" }
-  ]
 };
