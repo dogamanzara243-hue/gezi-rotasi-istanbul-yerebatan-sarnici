@@ -1,68 +1,164 @@
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof SPOT_DATA === "undefined") return;
-  document.body.classList.add(`theme-${SPOT_DATA.theme}`);
-  document.getElementById("meta-title").textContent = SPOT_DATA.meta.title;
-  document.getElementById("hero-image").src = SPOT_DATA.hero.coverImage;
-  document.getElementById("hero-badge-icon").className = `${SPOT_DATA.hero.badgeIcon} mr-1.5`;
-  document.getElementById("hero-badge-text").textContent = SPOT_DATA.hero.badge;
-  document.getElementById("hero-title").textContent = SPOT_DATA.hero.title;
-  document.getElementById("hero-subtitle").textContent = SPOT_DATA.hero.subtitle;
-  
-  document.getElementById("hero-stats").innerHTML = SPOT_DATA.hero.stats.map(s => `
-    <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-700 text-center">
-      <i class="${s.icon} text-amber-500 mb-1"></i>
-      <div class="text-xl font-bold text-white">${s.value}</div>
-      <div class="text-xs text-slate-400">${s.label}</div>
-    </div>
-  `).join("");
-
-  document.getElementById("what-title").textContent = SPOT_DATA.whatIsIt.title;
-  document.getElementById("what-badge").textContent = SPOT_DATA.whatIsIt.categoryBadge;
-  document.getElementById("what-desc").textContent = SPOT_DATA.whatIsIt.description;
-
-  document.getElementById("guide-title").textContent = SPOT_DATA.detailedGuide.title;
-  document.getElementById("guide-paragraphs").innerHTML = SPOT_DATA.detailedGuide.paragraphs.map(p => `<p>${p}</p>`).join("");
-
-  document.getElementById("why-visit-grid").innerHTML = SPOT_DATA.whyVisit.map(w => `
-    <div class="bg-slate-800 rounded-3xl p-6 border border-slate-700 flex flex-col justify-between">
-      <div>
-        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center mb-4">
-          <i class="${w.icon} text-xl"></i>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">${w.title}</h3>
-        <p class="text-slate-300 text-sm">${w.description}</p>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("highlights-list").innerHTML = SPOT_DATA.highlights.map(h => `
-    <li class="flex items-center space-x-3 bg-slate-900/50 p-4 rounded-2xl border border-slate-700">
-      <i class="fa-solid fa-circle-check text-amber-500"></i>
-      <span class="text-slate-200 text-sm">${h}</span>
-    </li>
-  `).join("");
-
-  document.getElementById("transport-title").textContent = SPOT_DATA.transportation.title;
-  document.getElementById("transport-desc").textContent = SPOT_DATA.transportation.description;
-  document.getElementById("transport-tips").innerHTML = SPOT_DATA.transportation.tips.map(t => `
-    <li class="flex items-start space-x-3 text-slate-300 text-sm bg-slate-900/40 p-3.5 rounded-xl border border-slate-700">
-      <i class="fa-solid fa-arrow-right text-amber-500 mt-1"></i><span>${t}</span>
-    </li>
-  `).join("");
-
-  document.getElementById("hotels-grid").innerHTML = SPOT_DATA.hotels.map(h => `
-    <div class="bg-slate-800 rounded-3xl overflow-hidden border border-slate-700 flex flex-col justify-between">
-      <div class="h-48 relative"><img src="${h.image}" class="w-full h-full object-cover"><span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-slate-950">${h.badge}</span></div>
-      <div class="p-6 space-y-4"><h3 class="text-xl font-bold text-white">${h.name}</h3><p class="text-slate-300 text-sm">${h.description}</p>
-      <a href="${h.url}" target="_blank" class="block text-center px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-sm font-medium">Otel Fırsatları</a></div>
-    </div>
-  `).join("");
-
-  document.getElementById("restaurants-grid").innerHTML = SPOT_DATA.restaurants.map(r => `
-    <div class="bg-slate-800 rounded-3xl p-6 border border-slate-700 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="text-xl font-bold text-white">${r.name}</h3><span class="px-2.5 py-1 rounded-lg text-xs bg-amber-500/20 text-amber-300">${r.badge}</span></div>
-      <p class="text-slate-300 text-sm">${r.description}</p>
-      <div class="text-xs text-slate-400 flex items-center"><i class="fa-solid fa-location-dot text-amber-500 mr-2"></i>${r.location}</div>
-    </div>
-  `).join("");
+    if (typeof SPOT_DATA === "undefined") {
+        console.error("Hata: SPOT_DATA bulunamadı. Lütfen data.js dosyasını kontrol edin.");
+        return;
+    }
+    renderTheme();
+    renderNavigation();
+    renderHero();
+    renderVenueSummary();
+    renderOverview();
+    renderWhyVisit();
+    renderMustSee();
+    renderTransportation();
+    renderWhereToStay();
+    renderWhereToEat();
+    setupEventListeners();
 });
+
+function renderTheme() {
+    const validThemes = ["nature", "history", "sea", "museum"];
+    const theme = validThemes.includes(SPOT_DATA.theme) ? SPOT_DATA.theme : "museum";
+    document.body.classList.add(`theme-${theme}`);
+}
+
+function renderNavigation() {
+    document.title = `${SPOT_DATA.title} | Gezi Rehberi`;
+    document.getElementById("breadcrumb-title").textContent = SPOT_DATA.title;
+}
+
+function renderHero() {
+    document.getElementById("hero-bg").src = SPOT_DATA.hero.coverImage;
+    document.getElementById("hero-bg").alt = SPOT_DATA.title;
+    document.querySelector("#badge-category span").textContent = SPOT_DATA.category;
+    document.querySelector("#badge-honor span").textContent = SPOT_DATA.hero.badge;
+    document.getElementById("hero-title").textContent = SPOT_DATA.title;
+    document.getElementById("hero-subtitle").textContent = SPOT_DATA.subtitle;
+
+    const statsContainer = document.getElementById("hero-stats");
+    statsContainer.innerHTML = SPOT_DATA.hero.stats.map(stat => `
+        <div class="border-r border-white/10 last:border-0 pr-2">
+            <span class="block text-xs text-slate-400 uppercase tracking-wider">${stat.label}</span>
+            <span class="text-sm sm:text-base md:text-lg font-semibold text-amber-400 truncate block">${stat.value}</span>
+        </div>
+    `).join("");
+}
+
+function renderVenueSummary() {
+    document.getElementById("summary-badge-title").textContent = SPOT_DATA.venueSummary.badgeTitle;
+    document.getElementById("summary-type-title").textContent = SPOT_DATA.venueSummary.typeTitle;
+    document.getElementById("summary-description").textContent = SPOT_DATA.venueSummary.description;
+
+    const detailsContainer = document.getElementById("summary-details");
+    detailsContainer.innerHTML = SPOT_DATA.venueSummary.details.map(item => `
+        <div class="bg-white/10 px-3 py-1.5 rounded-lg">
+            <span class="text-slate-400">${item.label}:</span> ${item.value}
+        </div>
+    `).join("");
+}
+
+function renderOverview() {
+    document.querySelector("#overview-title span:last-child").textContent = SPOT_DATA.overview.title;
+    const paragraphsContainer = document.getElementById("overview-paragraphs");
+    paragraphsContainer.innerHTML = SPOT_DATA.overview.paragraphs.map(p => `<p>${p}</p>`).join("");
+
+    const notesContainer = document.getElementById("visitor-notes-list");
+    notesContainer.innerHTML = SPOT_DATA.overview.visitorNotes.map((note, idx, arr) => `
+        <li class="flex justify-between pb-2 ${idx !== arr.length - 1 ? 'border-b border-slate-100' : ''}">
+            <span>${note.label}:</span>
+            <span class="font-semibold text-slate-800">${note.value}</span>
+        </li>
+    `).join("");
+}
+
+function renderWhyVisit() {
+    document.getElementById("why-visit-title").textContent = SPOT_DATA.whyVisit.title;
+    document.getElementById("why-visit-subtitle").textContent = SPOT_DATA.whyVisit.subtitle;
+
+    const cardsContainer = document.getElementById("why-visit-cards");
+    cardsContainer.innerHTML = SPOT_DATA.whyVisit.cards.map(card => `
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow group">
+            <div class="w-12 h-12 rounded-xl bg-theme-light text-theme flex items-center justify-center text-xl mb-4 group-hover:bg-theme group-hover:text-white transition-colors">
+                <i class="${card.icon}"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">${card.title}</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">${card.description}</p>
+        </div>
+    `).join("");
+}
+
+function renderMustSee() {
+    document.querySelector("#must-see-title span").textContent = SPOT_DATA.mustSee.title;
+    const itemsContainer = document.getElementById("must-see-items");
+    itemsContainer.innerHTML = SPOT_DATA.mustSee.items.map(item => `
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs">
+            <span class="text-xs font-bold text-theme uppercase tracking-wide">${item.category}</span>
+            <h4 class="font-bold text-slate-900 text-base mt-1 mb-2">${item.title}</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">${item.description}</p>
+        </div>
+    `).join("");
+}
+
+function renderTransportation() {
+    document.querySelector("#transport-title span").textContent = SPOT_DATA.transportation.title;
+    const methodsContainer = document.getElementById("transport-methods");
+    methodsContainer.innerHTML = SPOT_DATA.transportation.methods.map(method => `
+        <div class="flex items-start space-x-3">
+            <i class="${method.icon} text-theme text-lg mt-0.5"></i>
+            <div>
+                <strong class="text-slate-800 block">${method.title}</strong>
+                ${method.detail}
+            </div>
+        </div>
+    `).join("");
+
+    document.getElementById("transport-tip").textContent = SPOT_DATA.transportation.tip;
+    document.getElementById("map-link").href = SPOT_DATA.transportation.mapUrl;
+    document.getElementById("map-bg-img").src = SPOT_DATA.transportation.mapBgImage;
+}
+
+function renderWhereToStay() {
+    document.querySelector("#where-to-stay-title span").textContent = SPOT_DATA.whereToStay.title;
+    const hotelContainer = document.getElementById("hotel-list");
+    hotelContainer.innerHTML = SPOT_DATA.whereToStay.hotels.map(hotel => `
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+                <span class="text-[10px] font-bold text-theme bg-theme-light px-2 py-0.5 rounded-md">${hotel.badge}</span>
+                <h4 class="font-bold text-slate-900 text-base">${hotel.name}</h4>
+                <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot mr-1"></i> ${hotel.distance}</p>
+            </div>
+            <a href="${hotel.link}" target="_blank" rel="noopener" class="px-4 py-2 bg-theme-light hover:bg-theme hover:text-white text-theme rounded-xl text-xs font-semibold transition-colors">
+                Otele Bak
+            </a>
+        </div>
+    `).join("");
+}
+
+function renderWhereToEat() {
+    document.querySelector("#where-to-eat-title span").textContent = SPOT_DATA.whereToEat.title;
+    const restaurantContainer = document.getElementById("restaurant-list");
+    restaurantContainer.innerHTML = SPOT_DATA.whereToEat.restaurants.map(rest => `
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+                <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">${rest.badge}</span>
+                <h4 class="font-bold text-slate-900 text-base">${rest.name}</h4>
+                <p class="text-xs text-slate-500">${rest.detail}</p>
+            </div>
+            <span class="text-amber-500 text-xs font-bold flex items-center">
+                <i class="fa-solid fa-star mr-1"></i> ${rest.rating}
+            </span>
+        </div>
+    `).join("");
+}
+
+function setupEventListeners() {
+    document.getElementById("btn-favorite").addEventListener("click", () => {
+        alert(`${SPOT_DATA.title} favorilere eklendi!`);
+    });
+    document.getElementById("btn-share").addEventListener("click", () => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Bağlantı panoya kopyalandı!");
+        }
+    });
+}
